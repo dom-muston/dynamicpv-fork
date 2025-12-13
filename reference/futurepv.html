@@ -97,15 +97,15 @@
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A tibble of class "dynpv" with the following columns:</p><ul><li><p><code>j</code>: todo</p></li>
-<li><p><code>k</code>: todo</p></li>
-<li><p><code>l</code>: todo</p></li>
-<li><p><code>t</code>: todo</p></li>
-<li><p><code>uj</code>: todo</p></li>
-<li><p><code>pk</code>: todo</p></li>
-<li><p><code>R</code>: todo</p></li>
-<li><p><code>v</code>: todo</p></li>
-<li><p><code>pv</code>: todo</p></li>
+    <p>A tibble of class "dynpv" with the following columns:</p><ul><li><p><code>j</code>: Time at which patients began treatment</p></li>
+<li><p><code>k</code>: Time since patients began treatment</p></li>
+<li><p><code>l</code>: Time offset for the price index (from <code>tzero</code>)</p></li>
+<li><p><code>t</code>: Equals \(j+k-1\)</p></li>
+<li><p><code>uj</code>: Uptake of patients beginning treatment at time \(j\) (from <code>uptakes</code>)</p></li>
+<li><p><code>pk</code>: Cashflow amount in today's money in respect of patients at time \(k\) since starting treatment (from <code>payoffs</code>)</p></li>
+<li><p><code>R</code>: Index of prices over time \(l+t\) (from <code>prices</code>)</p></li>
+<li><p><code>v</code>: Discounting factors, \((1+i)^{1-t}\), where <code>i</code> is the discount rate per timestep</p></li>
+<li><p><code>pv</code>: Present value, \(PV(j,k,l)\)</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
