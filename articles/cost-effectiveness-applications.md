@@ -52,49 +52,51 @@ provides the technical basis of the calculations within the package.
 
 ### Mathematical framework
 
-Let us partition time as follows. Suppose $j = 1,...,T$ indexes the time
-at which the patient begins treatment (with either the new intervention
-of Standard of Care, SoC), where $T$ is the time horizon of the
-decision-maker. Suppose $k = 1,...,T$ indexes time since initiating
-treatment.
+Let us partition time as follows. Suppose \\j=1, ..., T\\ indexes the
+time at which the patient begins treatment (with either the new
+intervention of Standard of Care, SoC), where \\T\\ is the time horizon
+of the decision-maker. Suppose \\k=1, ..., T\\ indexes time since
+initiating treatment.
 
 This can be illustrated through an example. Suppose then we are
 considering a cashflow in timestep 3. This will comprise:
 
 - patients who are in the third timestep of treatment that began in
-  timestep 1, $(j,k) = (1,3)$;
+  timestep 1, \\(j,k) = (1, 3)\\;
 - patients who are in the second timestep of treatment that began in
-  timestep 2, $(j,k) = (2,2)$; and
+  timestep 2, \\(j,k) = (2, 2)\\; and
 - patients who are in the first timestep of treatment that began in
-  timestep 3, $(j,k) = (3,1)$.
+  timestep 3, \\(j,k) = (3, 1)\\.
 
-In general, $t = j + k - 1$, and we are interested in $t = 1,...,T$.
+In general, \\t=j+k-1\\, and we are interested in \\t=1,...,T\\.
 
-The Present Value of a cashflow $p_{k}$ for the $u_{j}$ patients who
-began treatment at time $j$ and who are in their $k$th timestep of
+The Present Value of a cashflow \\p_k\\ for the \\u_j\\ patients who
+began treatment at time \\j\\ and who are in their \\k\\th timestep of
 treatment is as follows
 
-$$PV(j,k) = u_{j} \cdot p_{k} \cdot R_{j + k - 1} \cdot (1 + i)^{2 - j - k}$$
+\\ PV(j,k) = u_j \cdot p_k \cdot R\_{j+k-1} \cdot (1+i)^{2-j-k} \\
 
-where $i$ is the risk-free discount rate per timestep, and $p_{k}$ is
-the cashflow amount in today’s money, and $p_{k} \cdot R_{j + k - 1}$ is
+where \\i\\ is the risk-free discount rate per timestep, and \\p_k\\ is
+the cashflow amount in today’s money, and \\p_k \cdot R\_{j+k-1}\\ is
 the nominal amount of the cashflow at the time it is incurred.
 
-The total present value is therefore the sum over all $j$ and $k$ within
-the time horizon $T$, namely:
+The total present value is therefore the sum over all \\j\\ and \\k\\
+within the time horizon \\T\\, namely:
 
-$$TPV = \sum\limits_{j = 1}^{T}\sum\limits_{k = 1}^{T - j + 1}PV(j,k) = \sum\limits_{j = 1}^{T}\sum\limits_{k = 1}^{T - j + 1}u_{j} \cdot p_{k} \cdot R_{j + k - 1} \cdot (1 + i)^{2 - j - k}$$
+\\ TPV = \sum\_{j=1}^{T} \sum\_{k=1}^{T-j+1} PV(j, k) = \sum\_{j=1}^{T}
+\sum\_{k=1}^{T-j+1} u_j \cdot p_k \cdot R\_{j+k-1} \cdot (1+i)^{2-j-k}
+\\
 
 The
 [`dynamicpv::dynpv()`](https://MSDLLCpapers.github.io/dynacem/reference/dynpv.md)
 function operationalizes this calculation with arguments:
 
-- `payoffs` $= p_{k}$
-- `uptakes` $= u_{j}$
-- `horizon` $= T$, defaulting to the length of `payoffs`
-- `prices` $= R_{t}$, where $t = j + k - 1 + t_{0}$
-- `discrate` $= i$
-- `tzero` $= t_{0}$, defaulting to zero
+- `payoffs` \\= {p_k}\\
+- `uptakes` \\= {u_j}\\
+- `horizon` \\= T\\, defaulting to the length of `payoffs`
+- `prices` \\= {R_t}\\, where \\t=j+k-1+t_0\\
+- `discrate` \\= i\\
+- `tzero` \\= t_0\\, defaulting to zero
 
 The `tzero` argument is a time offset useful to be able to calculate
 present values into the future, which can be performed for single
