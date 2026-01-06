@@ -4,7 +4,7 @@
 \name{dynamicpv-package}
 \alias{dynamicpv}
 \alias{dynamicpv-package}
-\title{dynamicpv: Evaluates Present Values and Cost-Effectiveness With Dynamic Pricing And Uptake}
+\title{dynamicpv: Evaluates Present Values and Cost-Effectiveness with Dynamic Pricing and Uptake}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
@@ -24,6 +24,7 @@ Useful links:
 
 Other contributors:
 \itemize{
+  \item John Blischak (\href{https://orcid.org/0000-0003-2634-9879}{ORCID}) [contributor]
   \item Merck & Co., Inc., Rahway, NJ, USA and its affiliates [copyright holder, funder]
 }
 
