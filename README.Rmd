@@ -27,7 +27,7 @@ Through the [dynpv()](https://msdllcpapers.github.io/dynamicpv/reference/dynpv.h
 
 ## Installation
 
-You can install the development version of *dynamicpv* from [GitHub](https://github.com/) as follows. (The package was previously known as *dynacem*, but *dynamicpv* better reflects the package's intent.)
+You can install the development version of *dynamicpv* from [GitHub](https://github.com/) as follows.
 
 ```{r instal1}
 #| eval: false
