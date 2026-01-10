@@ -158,8 +158,8 @@ summary(pv3)
 #>      Mean present value:            463.6326
 ```
 
-With this dynamic pricing change, the NPV has reduced by -128.363, from
-592 to 464. The corresponding base R code is shown below.
+With this dynamic pricing change, the NPV has reduced by 128, from 592
+to 464. The corresponding base R code is shown below.
 
 ``` r
 # Compare with more base calculations
@@ -192,10 +192,8 @@ With
 we just update the `uptakes` argument.
 
 ``` r
-# Uptake vector is simple
+# Uptake vector is (1, 1, 1, 1, 1)
 uptakes1 <- rep(1, 5)
-uptakes1
-#> [1] 1 1 1 1 1
 
 # NPV calculation
 pv4 <- dynpv(payoffs=cashflow, uptakes=uptakes1, discrate=disc)
@@ -232,7 +230,7 @@ increases by one each year. The weighting given to cashflow 1 would then
 be \\1/(1+2+3+4+5)=6.67\\ %.
 
 ``` r
-# Uptake vector is simple
+# Uptake vector is (1, 2, 3, 4, 5)
 uptakes2 <- 1:5
 
 # NPV calculation
@@ -293,6 +291,10 @@ pv6
 #> 13     4     1     0     4     4   110  0.5  0.850 187. 
 #> 14     4     2     0     5     4   120  0.5  0.805 193. 
 #> 15     5     1     0     5     5   110  0.5  0.805 221.
+
+# Total present value = sum of the pv column
+sum(pv6$pv)
+#> [1] 2330.349
 
 summary(pv6)
 #> Summary of Dynamic Pricing and Uptake

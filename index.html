@@ -74,21 +74,16 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of ‘dynamicpv’ is to provide a simple way to calculate (net) present values and outputs from health economic models (especially cost-effectiveness and budget impact) in discrete time that reflect dynamic pricing and dynamic uptake. Dynamic pricing is also known as life cycle pricing; dynamic uptake is also known as multiple or stacked cohorts, or dynamic disease prevalence. Shafrin (2024) <a href="doi:10.1515/fhep-2024-0014" class="uri">doi:10.1515/fhep-2024-0014</a> provides an explanation of dynamic value elements, in the context of Generalized Cost Effectiveness Analysis, and Puls (2024) <a href="doi:10.1016/j.jval.2024.03.006" class="uri">doi:10.1016/j.jval.2024.03.006</a> reviews challenges of incorporating such dynamic value elements. This package aims to reduce those challenges.</p>
+<p>The goal of ‘dynamicpv’ is to provide a simple way to calculate (net) present values and outputs from health economic models (especially cost-effectiveness and budget impact) in discrete time that reflect dynamic pricing and dynamic uptake.</p>
+<p>Dynamic pricing is also known as life cycle pricing; dynamic uptake is also known as multiple or stacked cohorts, or dynamic disease prevalence. <a href="https://doi.org/10.1515/fhep-2024-0014" class="external-link">Shafrin (2024)</a> provides an explanation of dynamic value elements, in the context of Generalized Cost Effectiveness Analysis, and <a href="https://doi.org/10.1016/j.jval.2024.03.006" class="external-link">Puls (2024)</a> reviews challenges of incorporating such dynamic value elements. This package aims to reduce those challenges.</p>
 <p>Through the <a href="https://msdllcpapers.github.io/dynamicpv/reference/dynpv.html" class="external-link">dynpv()</a> function, the package provides calculations of the present values of costs, life years, QALYs or other payoffs allowing for dynamic uptake and dynamic pricing. The starting point is a conventional cohort cost-effectiveness model, such as one computed using the <a href="https://cran.r-project.org/package=heemod" class="external-link">heemod</a> package.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>The package should shortly be available on <a href="https://cran.r-project.org/web/packages/index.html" class="external-link">CRAN</a>. Installing from here is simplest, once available.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dynamicpv"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Installing package into '/private/var/folders/6y/njqz7c9j79q_b0vdms017th40000gn/T/RtmpzDSE2G/temp_libpath3fc15cd1f1cd'</span></span>
-<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
-<span><span class="co">#&gt; Warning: package 'dynamicpv' is not available for this version of R</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; A version of this package for your version of R might be available elsewhere,</span></span>
-<span><span class="co">#&gt; see the ideas at</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># CRAN installation - when available</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dynamicpv"</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the development version of <em>dynamicpv</em> from <a href="https://github.com/" class="external-link">GitHub</a> as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install devtools package if not already installed</span></span>

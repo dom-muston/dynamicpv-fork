@@ -266,8 +266,8 @@ year.</p>
 <span><span class="co">#&gt;      Total uptake:                  1 </span></span>
 <span><span class="co">#&gt;      Total present value:           463.6326 </span></span>
 <span><span class="co">#&gt;      Mean present value:            463.6326</span></span></code></pre></div>
-<p>With this dynamic pricing change, the NPV has reduced by -128.363,
-from 592 to 464. The corresponding base R code is shown below.</p>
+<p>With this dynamic pricing change, the NPV has reduced by 128, from
+592 to 464. The corresponding base R code is shown below.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare with more base calculations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">vt2</span> <span class="op">*</span> <span class="va">cashflow</span> <span class="op">*</span> <span class="va">pindex</span><span class="op">)</span></span>
@@ -391,10 +391,8 @@ rate</caption>
 <p>With <code><a href="../reference/dynpv.html">dynamicpv::dynpv()</a></code>, we just update the
 <code>uptakes</code> argument.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Uptake vector is simple</span></span>
+<code class="sourceCode R"><span><span class="co"># Uptake vector is (1, 1, 1, 1, 1)</span></span>
 <span><span class="va">uptakes1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">uptakes1</span></span>
-<span><span class="co">#&gt; [1] 1 1 1 1 1</span></span>
 <span></span>
 <span><span class="co"># NPV calculation</span></span>
 <span><span class="va">pv4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dynpv.html">dynpv</a></span><span class="op">(</span>payoffs<span class="op">=</span><span class="va">cashflow</span>, uptakes<span class="op">=</span><span class="va">uptakes1</span>, discrate<span class="op">=</span><span class="va">disc</span><span class="op">)</span></span>
@@ -426,7 +424,7 @@ cashflow.</p>
 increases by one each year. The weighting given to cashflow 1 would then
 be <span class="math inline">\(1/(1+2+3+4+5)=6.67\)</span> %.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Uptake vector is simple</span></span>
+<code class="sourceCode R"><span><span class="co"># Uptake vector is (1, 2, 3, 4, 5)</span></span>
 <span><span class="va">uptakes2</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
 <span></span>
 <span><span class="co"># NPV calculation</span></span>
@@ -483,6 +481,10 @@ complicated with base functions, even in this toy example.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     4     1     0     4     4   110  0.5  0.850 187. </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     4     2     0     5     4   120  0.5  0.805 193. </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     5     1     0     5     5   110  0.5  0.805 221.</span></span>
+<span></span>
+<span><span class="co"># Total present value = sum of the pv column</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">pv6</span><span class="op">$</span><span class="va">pv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2330.349</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pv6</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Summary of Dynamic Pricing and Uptake</span></span>

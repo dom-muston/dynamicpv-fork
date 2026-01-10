@@ -150,6 +150,8 @@ pricing. This function is a wrapper for
 [`dynpv()`](https://MSDLLCpapers.github.io/dynamicpv/reference/dynpv.md)
 restricted to evaluation of a single cohort.
 
+## References
+
 Avanceña, Anton L. V., and Lisa A. Prosser. 2021. “Examining Equity
 Effects of Health Interventions in Cost-Effectiveness Analysis: A
 Systematic Review.” *Value in Health* 24 (1): 136–43.
