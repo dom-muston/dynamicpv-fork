@@ -15,9 +15,7 @@ cost-effectiveness model, such as one computed using the
 ## Installation
 
 You can install the development version of *dynamicpv* from
-[GitHub](https://github.com/) as follows. (The package was previously
-known as *dynacem*, but *dynamicpv* better reflects the package’s
-intent.)
+[GitHub](https://github.com/) as follows.
 
 ``` r
 # Install devtools package if not already installed
@@ -55,21 +53,17 @@ There are four vignettes provided.
 
 1.  The [Dynamic
     Pricing](https://msdllcpapers.github.io/dynamicpv/articles/dynamic-pricing.html)
-    vignette
-    ([`vignette("dynamic-pricing")`](https://MSDLLCpapers.github.io/dynamicpv/articles/dynamic-pricing.md))
-    describes how present values may be calculated in the package from a
-    payoff vector, allowing for the prices of the resources costed to be
-    dynamic.
+    vignette (`vignette("dynamic-pricing")`) describes how present
+    values may be calculated in the package from a payoff vector,
+    allowing for the prices of the resources costed to be dynamic.
 
 2.  The [Dynamic
     Uptake](https://msdllcpapers.github.io/dynamicpv/articles/dynamic-uptake.html)
-    vignette
-    ([`vignette("dynamic-uptake")`](https://MSDLLCpapers.github.io/dynamicpv/articles/dynamic-uptake.md))
-    explores further how present values can be derived allowing for
-    dynamic uptake. This is in contrast to the non-dynamic approach of
-    calculating a present value for a single cohort of patients. This is
-    analogous to the use by general insurance actuaries of run-off
-    triangles.
+    vignette (`vignette("dynamic-uptake")`) explores further how present
+    values can be derived allowing for dynamic uptake. This is in
+    contrast to the non-dynamic approach of calculating a present value
+    for a single cohort of patients. This is analogous to the use by
+    general insurance actuaries of run-off triangles.
 
 3.  The [Cost-Effectiveness
     Applications](https://msdllcpapers.github.io/dynamicpv/articles/cost-effectiveness-applications.html)
@@ -147,7 +141,7 @@ There are four vignettes provided.
   Applications](https://MSDLLCpapers.github.io/dynamicpv/articles/budget-impact-applications.md):
 - [Cost-Effectiveness
   Applications](https://MSDLLCpapers.github.io/dynamicpv/articles/cost-effectiveness-applications.md):
-- [Dynamic
-  Pricing](https://MSDLLCpapers.github.io/dynamicpv/articles/dynamic-pricing.md):
-- [Dynamic
-  Uptake](https://MSDLLCpapers.github.io/dynamicpv/articles/dynamic-uptake.md):
+- [Mathematical
+  Framework](https://MSDLLCpapers.github.io/dynamicpv/articles/math-framework.md):
+- [Net Present
+  Value](https://MSDLLCpapers.github.io/dynamicpv/articles/net-present-value.md):
