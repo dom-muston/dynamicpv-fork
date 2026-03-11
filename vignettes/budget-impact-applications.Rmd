@@ -387,6 +387,8 @@ budget_wout1_new <- 0
 budget_wout1 <- budget_wout1_soc
 ```
 
+The total budgetary costs in the world without are $`r total(budget_wout1)` in respect of `r uptake(budget_wout1)` patients.
+
 Next we calculate costs with the new treatment, in the 'world with' the new intervention.
 
 ```{r bim_with1}
@@ -416,13 +418,15 @@ budget_with1_new <- with1_new_daqcost + with1_new_othcost
 budget_with1 <- budget_with1_new
 ```
 
-Finally, we derive the budget impact as the difference in costs.
+The budgetary costs in the world with the new intervention are $`r total(budget_with1)`$. Finally, we derive the budget impact as the difference in costs.
 
 ```{r bim_iwith1}
 # Budget impact
 bi1 <- budget_with1 - budget_wout1
 summary(bi1)
 ```
+
+The total budget impact is $`r total(bi1)`, representing an increase of `r total(bi1)/total(budget_wout1) *100`%.
 
 ### Scenario 2: Dynamic pricing, no dynamic uptake
 
@@ -449,6 +453,8 @@ budget_wout2_new <- 0
 budget_wout2 <- budget_wout2_soc
 ```
 
+The total budgetary costs in the world without are $`r total(budget_wout2)` in respect of `r uptake(budget_wout2)` patients.
+
 Next we derive the costs of the new intervention, in the 'world with' the new intervention.
 
 ```{r bim_with2}
@@ -472,13 +478,14 @@ budget_with2_new <- with2_new_daqcost + with2_new_othcost
 budget_with2 <- budget_with2_new
 ```
 
-Finally again, we derive budget impact as the difference.
+The budgetary costs in the world with the new intervention are $`r total(budget_with2)`$. Finally again, we derive budget impact as the difference.
 
 ```{r bim_iwith2}
 # Budget impact
 bi2 <- budget_with2 - budget_wout2
 summary(bi2)
 ```
+The total budget impact is $`r total(bi2)`, representing an increase of `r total(bi2)/total(budget_wout2) *100`%.
 
 ### Scenario 3: Dynamic uptake, not dynamic pricing
 
@@ -650,12 +657,12 @@ The total budget impact is $`r total(bi4)`, representing an increase of `r total
 | | New intervention | 0 | 0 | 0 | 0 |
 | | Total | `r total(budget_wout1)` | `r total(budget_wout2)` | `r total(budget_wout3)` | `r total(budget_wout4)` |
 | World with new intervention ||||  |  |
-| | Standard of Care | `r total(budget_with1_soc)` | `r total(budget_with2_soc)` | `r total(budget_with3_soc)`  | `r total(budget_with4_soc)`  |
+| | Standard of Care | 0 | 0 | `r total(budget_with3_soc)`  | `r total(budget_with4_soc)`  |
 | | New intervention | `r total(budget_with1_new)` | `r total(budget_with2_new)` | `r total(budget_with3_new)` | `r total(budget_with4_new)` |
 | | Total | `r total(budget_with1)` | `r total(budget_with2)` | `r total(budget_with3)` | `r total(budget_with4_new)`  |
 | Budget impact || ||  |  |
-| | Standard of Care | `r total(bi1_soc)` | `r total(bi2_soc)` | `r total(bi3_soc)` | `r total(bi4_soc)`  |
-| | New intervention | `r total(bi1_new)` | `r total(bi2_new)` | `r total(bi3_new)` | `r total(bi4_new)`  |
+| | Standard of Care | `r -total(budget_wout1_soc)` | `r -total(budget_wout2_soc)` | `r total(bi3_soc)` | `r total(bi4_soc)`  |
+| | New intervention | `r total(budget_with1_new)` | `r total(budget_with2_new)` | `r total(bi3_new)` | `r total(bi4_new)`  |
 | | Absolute impact | `r total(bi1)`| `r total(bi2)` | `r total(bi3)` | `r total(bi4)`  |
 | | Relative impact (%) | `r ((total(bi1))/(total(budget_wout1))*100)`% | `r ((total(bi2))/(total(budget_wout2))*100)`% | `r ((total(bi3))/(total(budget_wout3))*100)`% | `r ((total(bi4))/(total(budget_wout4))*100)`%  |
 
