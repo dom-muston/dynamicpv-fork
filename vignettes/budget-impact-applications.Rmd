@@ -356,9 +356,9 @@ uptake_soc <- newly_eligible - uptake_new
 
 ## Results
 
-### Static prices
+### Scenario 1: No dynamic uptake or pricing
 
-First we consider static prices, i.e. we assume the prices of existing resources remain unchanged from now in the horizon of the budget impact model. Let us use that function to calculate budgetary costs for the world without the new intervention.
+This scenario assumes static uptake, i.e. that uptake is immediate and 100\% of eligible patients. This is an unconventional approach for a budget impact analysis. The analysis also assumes static prices, i.e. we assume the prices of existing resources remain unchanged from now in the horizon of the budget impact model. First we calculate costs with the SoC, in the 'world without' the new intervention.
 
 ```{r bim_wout1}
 # World without new intervention
@@ -382,37 +382,21 @@ wout1_soc_othcost <- dynpv(
     )
 
 # Total budgetary costs
-budget_wout1 <- budget_wout1_soc <- wout1_soc_daqcost + wout1_soc_othcost
+budget_wout1_soc <- wout1_soc_daqcost + wout1_soc_othcost
+budget_wout1_new <- 0
+budget_wout1 <- budget_wout1_soc
 ```
 
 The total budgetary costs in the world without are $`r total(budget_wout1)` in respect of `r uptake(budget_wout1)` patients.
 
-Let us now calculate the budgetary costs in the world with the new intervention.
+Next we calculate costs with the new treatment, in the 'world with' the new intervention.
 
 ```{r bim_with1}
-# World with
-
-# SoC, drug acquisition costs
-with1_soc_daqcost <- dynpv(
-    uptakes = uptake_soc,
-    payoffs = hemout_soc$cost_daq_soc_rup,
-    horizon = bi_horizon_wks,
-    prices = prices_static,
-    discrate = bi_discount
-    )
-
-# SoC, other costs
-with1_soc_othcost <- dynpv(
-    uptakes = uptake_soc,
-    payoffs = hemout_soc$cost_nondaq_rup,
-    horizon = bi_horizon_wks,
-    prices = prices_static,
-    discrate = bi_discount
-    )
+# World with: SoC are zero
 
 # New intervention, drug acquisition costs
 with1_new_daqcost <- dynpv(
-    uptakes = uptake_new,
+    uptakes = newly_eligible,
     payoffs = hemout_new$cost_daq_new_rup,
     horizon = bi_horizon_wks,
     prices = prices_static,
@@ -421,7 +405,7 @@ with1_new_daqcost <- dynpv(
 
 # New intervention, other costs
 with1_new_othcost <- dynpv(
-    uptakes = uptake_new,
+    uptakes = newly_eligible,
     payoffs = hemout_new$cost_nondaq_rup,
     horizon = bi_horizon_wks,
     prices = prices_static,
@@ -429,37 +413,24 @@ with1_new_othcost <- dynpv(
     )
 
 # Total
-budget_with1_soc <- with1_soc_daqcost + with1_soc_othcost
+budget_with1_soc <- 0
 budget_with1_new <- with1_new_daqcost + with1_new_othcost
-budget_with1 <- budget_with1_soc + budget_with1_new
+budget_with1 <- budget_with1_new
 ```
 
-Note the warning provided by `dynamicpv`. This is because the uptake vector for SoC, when trimmed of zeroes after uptake stops, has a different (shorter) length than the uptake vector for the new intervention. The calculation is still correct. However, the function is flagging for the user the different uptake vectors being used for different present value calculations.
-
-```{r warnlength}
-# The uptake vector for the new intervention is long
-length(trim_vec(uptake_new))
-
-# The uptake vector for the SoC is short, once trimmed of excess zeros
-length(trim_vec(uptake_soc))
-```
-
-The budgetary costs in the world with the new intervention are $`r total(budget_with1)`, comprising $`r total(budget_with1_soc)` in respect of the costs of `r uptake(budget_with1_soc)` patients being treated with the SoC, and $`r total(budget_with1_new)` in respect of the costs of `r uptake(budget_with1_new)` patients being treated with the SoC. 
+The budgetary costs in the world with the new intervention are $`r total(budget_with1)`$. Finally, we derive the budget impact as the difference in costs.
 
 ```{r bim_iwith1}
 # Budget impact
-bi1_soc <- budget_with1_soc - budget_wout1_soc
-bi1_new <- budget_with1_new
 bi1 <- budget_with1 - budget_wout1
-
 summary(bi1)
 ```
 
 The total budget impact is $`r total(bi1)`, representing an increase of `r total(bi1)/total(budget_wout1) *100`%.
 
-### Dynamic prices
+### Scenario 2: Dynamic pricing, no dynamic uptake
 
-Now let us recalculate the budget impact, assuming dynamic pricing in drug acquisition costs. This is simple with `dynamicpv()::dynpv()` because we just change the `prices` argument from `prices_static` to either `prices_dyn_soc` or `prices_dyn_new` for the drug acquisition costs. We will keep other costs unchanged.
+Scenario 2 adjusts scenario 1 by assuming instead dynamic pricing of the new intervention and SoC. Uptake remains modeled in the unconventional static manner. As before, we first calculate the costs of the SoC in the 'world without' the new intervention.
 
 ```{r bim_wout2}
 # World without new intervention
@@ -473,35 +444,25 @@ wout2_soc_daqcost <- dynpv(
     discrate = bi_discount
     )
 
-# SoC, other costs - unchanged from static calculations
+# SoC, other costs
 wout2_soc_othcost <- wout1_soc_othcost
 
 # Total budgetary costs
-budget_wout2 <- budget_wout2_soc <- wout2_soc_daqcost + wout2_soc_othcost
+budget_wout2_soc <- wout2_soc_daqcost + wout2_soc_othcost
+budget_wout2_new <- 0
+budget_wout2 <- budget_wout2_soc
 ```
 
 The total budgetary costs in the world without are $`r total(budget_wout2)` in respect of `r uptake(budget_wout2)` patients.
 
-Let us now calculate the budgetary costs in the world with the new intervention.
+Next we derive the costs of the new intervention, in the 'world with' the new intervention.
 
 ```{r bim_with2}
-# World with
-
-# SoC, drug acquisition costs
-with2_soc_daqcost <- dynpv(
-    uptakes = uptake_soc,
-    payoffs = hemout_soc$cost_daq_soc_rup,
-    horizon = bi_horizon_wks,
-    prices = prices_dyn_soc,
-    discrate = bi_discount
-    )
-
-# SoC, other costs
-with2_soc_othcost <- with1_soc_othcost
+# World with: SoC are zero
 
 # New intervention, drug acquisition costs
 with2_new_daqcost <- dynpv(
-    uptakes = uptake_new,
+    uptakes = newly_eligible,
     payoffs = hemout_new$cost_daq_new_rup,
     horizon = bi_horizon_wks,
     prices = prices_dyn_new,
@@ -512,43 +473,200 @@ with2_new_daqcost <- dynpv(
 with2_new_othcost <- with1_new_othcost
 
 # Total
-budget_with2_soc <- with2_soc_daqcost + with2_soc_othcost
+budget_with2_soc <- 0
 budget_with2_new <- with2_new_daqcost + with2_new_othcost
-budget_with2 <- budget_with2_soc + budget_with2_new
+budget_with2 <- budget_with2_new
 ```
 
-Notice that there is a similar warning as earlier. The budgetary costs in the world with the new intervention are $`r total(budget_with2)`, comprising $`r total(budget_with2_soc)` in respect of the costs of `r uptake(budget_with2_soc)` patients being treated with the SoC, and $`r total(budget_with2_new)` in respect of the costs of `r uptake(budget_with2_new)` patients being treated with the new treatment. 
+The budgetary costs in the world with the new intervention are $`r total(budget_with2)`$. Finally again, we derive budget impact as the difference.
 
 ```{r bim_iwith2}
 # Budget impact
-bi2_soc <- budget_with2_soc - budget_wout2_soc
-bi2_new <- budget_with2_new
 bi2 <- budget_with2 - budget_wout2
-
 summary(bi2)
 ```
-
 The total budget impact is $`r total(bi2)`, representing an increase of `r total(bi2)/total(budget_wout2) *100`%.
+
+### Scenario 3: Dynamic uptake, not dynamic pricing
+
+This scenario includes dynamic uptake, which is conventional in budget impact analysis, but assumes static prices, i.e. we assume the prices of existing resources remain unchanged from now in the horizon of the budget impact model. Let us use that function to calculate budgetary costs for the world without the new intervention.
+
+```{r bim_wout3}
+# World without new intervention
+# SoC, drug acquisition costs
+wout3_soc_daqcost <- wout1_soc_daqcost
+# SoC, other costs
+wout3_soc_othcost <- wout1_soc_othcost
+# Total budgetary costs
+budget_wout3 <- budget_wout3_soc <- wout3_soc_daqcost + wout3_soc_othcost
+```
+
+The total budgetary costs in the world without are $`r total(budget_wout3)` in respect of `r uptake(budget_wout3)` patients.
+
+Let us now calculate the budgetary costs in the world with the new intervention.
+
+```{r bim_with3}
+# World with
+
+# SoC, drug acquisition costs
+with3_soc_daqcost <- dynpv(
+    uptakes = uptake_soc,
+    payoffs = hemout_soc$cost_daq_soc_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_static,
+    discrate = bi_discount
+    )
+
+# SoC, other costs
+with3_soc_othcost <- dynpv(
+    uptakes = uptake_soc,
+    payoffs = hemout_soc$cost_nondaq_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_static,
+    discrate = bi_discount
+    )
+
+# New intervention, drug acquisition costs
+with3_new_daqcost <- dynpv(
+    uptakes = uptake_new,
+    payoffs = hemout_new$cost_daq_new_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_static,
+    discrate = bi_discount
+    )
+
+# New intervention, other costs
+with3_new_othcost <- dynpv(
+    uptakes = uptake_new,
+    payoffs = hemout_new$cost_nondaq_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_static,
+    discrate = bi_discount
+    )
+
+# Total
+budget_with3_soc <- with3_soc_daqcost + with3_soc_othcost
+budget_with3_new <- with3_new_daqcost + with3_new_othcost
+budget_with3 <- budget_with3_soc + budget_with3_new
+```
+
+Note the warning provided by `dynamicpv`. This is because the uptake vector for SoC, when trimmed of zeroes after uptake stops, has a different (shorter) length than the uptake vector for the new intervention. The calculation is still correct. However, the function is flagging for the user the different uptake vectors being used for different present value calculations.
+
+```{r warnlength}
+# The uptake vector for the new intervention is long
+length(trim_vec(uptake_new))
+
+# The uptake vector for the SoC is short, once trimmed of excess zeros
+length(trim_vec(uptake_soc))
+```
+
+The budgetary costs in the world with the new intervention are $`r total(budget_with3)`, comprising $`r total(budget_with3_soc)` in respect of the costs of `r uptake(budget_with3_soc)` patients being treated with the SoC, and $`r total(budget_with3_new)` in respect of the costs of `r uptake(budget_with3_new)` patients being treated with the SoC. 
+
+```{r bim_iwith3}
+# Budget impact
+bi3_soc <- budget_with3_soc - budget_wout3_soc
+bi3_new <- budget_with3_new
+bi3 <- budget_with3 - budget_wout3
+
+summary(bi3)
+```
+
+The total budget impact is $`r total(bi3)`, representing an increase of `r total(bi3)/total(budget_wout3) *100`%.
+
+### Scenario 4: Dynamic pricing and uptake
+
+Now let us recalculate the budget impact, assuming dynamic pricing in drug acquisition costs. This is simple with `dynamicpv()::dynpv()` because we just change the `prices` argument from `prices_static` to either `prices_dyn_soc` or `prices_dyn_new` for the drug acquisition costs. We will keep other costs unchanged.
+
+```{r bim_wout4}
+# World without new intervention
+
+# SoC, drug acquisition costs
+wout4_soc_daqcost <- dynpv(
+    uptakes = newly_eligible,
+    payoffs = hemout_soc$cost_daq_soc_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_dyn_soc,
+    discrate = bi_discount
+    )
+
+# SoC, other costs - unchanged from static calculations
+wout4_soc_othcost <- wout3_soc_othcost
+
+# Total budgetary costs
+budget_wout4 <- budget_wout4_soc <- wout4_soc_daqcost + wout4_soc_othcost
+```
+
+The total budgetary costs in the world without are $`r total(budget_wout4)` in respect of `r uptake(budget_wout4)` patients.
+
+Let us now calculate the budgetary costs in the world with the new intervention.
+
+```{r bim_with4}
+# World with
+
+# SoC, drug acquisition costs
+with4_soc_daqcost <- dynpv(
+    uptakes = uptake_soc,
+    payoffs = hemout_soc$cost_daq_soc_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_dyn_soc,
+    discrate = bi_discount
+    )
+
+# SoC, other costs
+with4_soc_othcost <- with3_soc_othcost
+
+# New intervention, drug acquisition costs
+with4_new_daqcost <- dynpv(
+    uptakes = uptake_new,
+    payoffs = hemout_new$cost_daq_new_rup,
+    horizon = bi_horizon_wks,
+    prices = prices_dyn_new,
+    discrate = bi_discount
+    )
+
+# New intervention, other costs
+with4_new_othcost <- with3_new_othcost
+
+# Total
+budget_with4_soc <- with4_soc_daqcost + with4_soc_othcost
+budget_with4_new <- with4_new_daqcost + with4_new_othcost
+budget_with4 <- budget_with4_soc + budget_with4_new
+```
+
+Notice that there is a similar warning as earlier. The budgetary costs in the world with the new intervention are $`r total(budget_with4)`, comprising $`r total(budget_with4_soc)` in respect of the costs of `r uptake(budget_with4_soc)` patients being treated with the SoC, and $`r total(budget_with2_new)` in respect of the costs of `r uptake(budget_with4_new)` patients being treated with the new treatment. 
+
+```{r bim_iwith4}
+# Budget impact
+bi4_soc <- budget_with4_soc - budget_wout4_soc
+bi4_new <- budget_with4_new
+bi4 <- budget_with4 - budget_wout4
+
+summary(bi4)
+```
+
+The total budget impact is $`r total(bi4)`, representing an increase of `r total(bi4)/total(budget_wout4) *100`%.
 
 ### Summary
 
-|    |  | Static drug pricing | Dynamic drug pricing |
-|:---|:--|------------|------------|
-| World without new intervention ||  |  |
-| | Standard of Care | `r total(budget_wout1_soc)` | `r total(budget_wout2_soc)`  |
-| | New intervention | 0 | 0 |
-| | Total | `r total(budget_wout1)` | `r total(budget_wout2)` |
-| World with new intervention ||  |  |
-| | Standard of Care | `r total(budget_with1_soc)`  | `r total(budget_with2_soc)`  |
-| | New intervention | `r total(budget_with1_new)` | `r total(budget_with2_new)` |
-| | Total | `r total(budget_with1)` | `r total(budget_with2_new)`  |
-| Budget impact ||  |  |
-| | Standard of Care | `r total(bi1_soc)` | `r total(bi2_soc)`  |
-| | New intervention | `r total(bi1_new)` | `r total(bi2_new)`  |
-| | Absolute impact | `r total(bi1)` | `r total(bi2)`  |
-| | Relative impact (%) | `r ((total(bi1))/(total(budget_wout1))*100)`% | `r ((total(bi2))/(total(budget_wout2))*100)`%  |
+|    |  | Scenario 1 | Scenario 2 | Scenario 3 | Scenario 4 |
+|:---|:--|------------|------------|------------|------------|
+| Dynamic pricing? || No | Yes | No | Yes |
+| Dynamic uptake? || No | No | Yes | Yes |
+| World without new intervention || ||  |  |
+| | Standard of Care |`r total(budget_wout1_soc)`  | `r total(budget_wout2_soc)` | `r total(budget_wout3_soc)` | `r total(budget_wout4_soc)`  |
+| | New intervention | 0 | 0 | 0 | 0 |
+| | Total | `r total(budget_wout1)` | `r total(budget_wout2)` | `r total(budget_wout3)` | `r total(budget_wout4)` |
+| World with new intervention ||||  |  |
+| | Standard of Care | 0 | 0 | `r total(budget_with3_soc)`  | `r total(budget_with4_soc)`  |
+| | New intervention | `r total(budget_with1_new)` | `r total(budget_with2_new)` | `r total(budget_with3_new)` | `r total(budget_with4_new)` |
+| | Total | `r total(budget_with1)` | `r total(budget_with2)` | `r total(budget_with3)` | `r total(budget_with4_new)`  |
+| Budget impact || ||  |  |
+| | Standard of Care | `r -total(budget_wout1_soc)` | `r -total(budget_wout2_soc)` | `r total(bi3_soc)` | `r total(bi4_soc)`  |
+| | New intervention | `r total(budget_with1_new)` | `r total(budget_with2_new)` | `r total(bi3_new)` | `r total(bi4_new)`  |
+| | Absolute impact | `r total(bi1)`| `r total(bi2)` | `r total(bi3)` | `r total(bi4)`  |
+| | Relative impact (%) | `r ((total(bi1))/(total(budget_wout1))*100)`% | `r ((total(bi2))/(total(budget_wout2))*100)`% | `r ((total(bi3))/(total(budget_wout3))*100)`% | `r ((total(bi4))/(total(budget_wout4))*100)`%  |
 
-: Budget Impact model results with and without dynamic drug pricing
+: Budget Impact model result by scenario
 
 ## Discussion
 
