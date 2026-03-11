@@ -382,7 +382,9 @@ wout1_soc_othcost <- dynpv(
     )
 
 # Total budgetary costs
-budget_wout1 <- budget_wout1_soc <- wout1_soc_daqcost + wout1_soc_othcost
+budget_wout1_soc <- wout1_soc_daqcost + wout1_soc_othcost
+budget_wout1_new <- 0
+budget_wout1 <- budget_wout1_new + budget_wout1_soc
 ```
 
 Next we calculate costs with the new treatment, in the 'world with' the new intervention.
@@ -409,7 +411,9 @@ with1_new_othcost <- dynpv(
     )
 
 # Total
-budget_with1 <- budget_with1_new <- with1_new_daqcost + with1_new_othcost
+budget_with1_soc <- 0
+budget_with1_new <- with1_new_daqcost + with1_new_othcost
+budget_with1 <- budget_with1_new + budget_with1_soc
 ```
 
 Finally, we derive the budget impact as the difference in costs.
@@ -440,7 +444,9 @@ wout2_soc_daqcost <- dynpv(
 wout2_soc_othcost <- wout1_soc_othcost
 
 # Total budgetary costs
-budget_wout2 <- budget_wout2_soc <- wout2_soc_daqcost + wout2_soc_othcost
+budget_wout2_soc <- wout2_soc_daqcost + wout2_soc_othcost
+budget_wout2_new <- 0
+budget_wout2 <- budget_wout2_soc + budget_wout2_new
 ```
 
 Next we derive the costs of the new intervention, in the 'world with' the new intervention.
@@ -461,7 +467,9 @@ with2_new_daqcost <- dynpv(
 with2_new_othcost <- with1_new_othcost
 
 # Total
-budget_with2 <- budget_with2_new <- with2_new_daqcost + with2_new_othcost
+budget_with2_soc <- 0
+budget_with2_new <- with2_new_daqcost + with2_new_othcost
+budget_with2 <- budget_with2_new + budget_with2_soc
 ```
 
 Finally again, we derive budget impact as the difference.
