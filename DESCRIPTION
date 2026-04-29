@@ -1,8 +1,8 @@
 Package: dynamicpv
 Title: Evaluates Present Values and Health Economic Models with Dynamic Pricing and Uptake
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
-    person("Dominic", "Muston", , "dominic.muston@msd.com", role = c("aut", "cre"),
+    person("Dominic", "Muston", , "dom.muston@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4876-7940")),
     person("John", "Blischak", role = c("ctb"),
            comment = c(ORCID = "0000-0003-2634-9879")),
@@ -19,13 +19,13 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     dplyr,
+    heemod,
     readr,
     rlang,
     tidyr
 Suggests: 
     flexsurv,
     ggplot2,
-    heemod,
     knitr,
     lubridate,
     purrr,
