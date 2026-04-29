@@ -19,13 +19,13 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     dplyr,
+    heemod,
     readr,
     rlang,
     tidyr
 Suggests: 
     flexsurv,
     ggplot2,
-    heemod,
     knitr,
     lubridate,
     purrr,
